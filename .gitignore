@@ -1,3 +1,4 @@
+# expo defaults
 node_modules/**/*
 .expo/*
 npm-debug.*
