@@ -8,5 +8,12 @@
         "skipLibCheck": true,
         "resolveJsonModule": true,
         "strict": true,
+        "baseUrl": "./src",
+    },
+    "paths": {
+        "components": ["./components"],
+        "containers": ["./containers"],
+        "models": ["./models"],
+        "screens": ["./screens"]
     }
 }

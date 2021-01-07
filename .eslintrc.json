@@ -37,7 +37,7 @@
             {
                 "singleQuote": true,
                 "tabWidth": 4,
-                "printWidth": 120
+                "printWidth": 110
             }
         ],
         "import/no-unresolved": 0,
@@ -47,8 +47,10 @@
         ],
         "import/extensions": [
             "error",
-            "never"
+            "never",
+            {"json": "always"}
         ],
+        "react/require-default-props": "off",
         "react/prop-types": 0,
         "no-shadow": "off"
     }

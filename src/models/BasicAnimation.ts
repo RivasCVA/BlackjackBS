@@ -9,13 +9,17 @@ export default class BasicAnimation {
 
     /**
      * Eases an Animated Value to a new value.
-     * @param val The Animated Value to animate.
-     * @param newVal The value to move towards.
+     * @param animatedValue The Animated Value to animate.
+     * @param targetValue The value to move towards.
      * @param duration The duration of the animation.
      */
-    public static easeValue = (val: Animated.Value, newVal: number, duration: number): Animated.CompositeAnimation => {
-        return Animated.timing(val, {
-            toValue: newVal,
+    public static easeValue = (
+        animatedValue: Animated.Value,
+        targetValue: number,
+        duration: number
+    ): Animated.CompositeAnimation => {
+        return Animated.timing(animatedValue, {
+            toValue: targetValue,
             duration,
             easing: Easing.inOut(Easing.ease),
             useNativeDriver: false,
