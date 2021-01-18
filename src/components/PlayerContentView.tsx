@@ -6,7 +6,7 @@ import PlayerAction from 'models/PlayerAction';
 import PlayingCard from 'models/PlayingCard';
 
 /**
- * The Player's card and action contents Component.
+ * The blackjack player's contents including the cards and action buttons.
  */
 const PlayerContentView = (props: Props): JSX.Element => {
     const { style, cards, onAction, splitButtonEnabled = false } = props;
@@ -63,6 +63,7 @@ interface Props {
     cards: PlayingCard[];
     /** When the player makes a game action. */
     onAction: (action: PlayerAction) => void;
+    /** The enabled status of the split action button. */
     splitButtonEnabled?: boolean;
 }
 

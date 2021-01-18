@@ -10,10 +10,11 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Color from 'models/Color';
+import Font from 'models/Font';
 import BasicHaptic from 'models/BasicHaptic';
 
 /**
- * A Blackjack player action button Component.
+ * A blackjack player action button.
  */
 const PlayerActionButton = (props: Props): JSX.Element => {
     const { style, title, titleStyle, onPress, disabled = false, haptic = false } = props;
@@ -32,13 +33,13 @@ const PlayerActionButton = (props: Props): JSX.Element => {
         >
             <LinearGradient
                 style={styles.linearGradient1}
-                colors={Color.midnightCityGradient}
+                colors={Color.gradient.midnightCityGradient}
                 start={[0, 0]}
                 end={[1, 1]}
             >
                 <LinearGradient
                     style={styles.linearGradient2}
-                    colors={Color.mangoGradient}
+                    colors={Color.gradient.mangoGradient}
                     start={[0, 0]}
                     end={[1, 1]}
                 >
@@ -52,10 +53,15 @@ const PlayerActionButton = (props: Props): JSX.Element => {
 export default PlayerActionButton;
 
 interface Props {
+    /** The button style. */
     style?: StyleProp<ViewStyle>;
+    /** The button title. */
     title: string;
+    /** The button title style. */
     titleStyle?: StyleProp<TextStyle>;
+    /** Button action event. */
     onPress: (event: GestureResponderEvent) => void;
+    /** When disabled, the button events are disabled and opacity is reduced. */
     disabled?: boolean;
     /** Enable haptic feedback */
     haptic?: boolean;
@@ -93,7 +99,7 @@ const styles = StyleSheet.create({
     },
     title: {
         textAlign: 'center',
-        fontWeight: 'bold',
+        fontFamily: Font('Rubik-Medium'),
         fontSize: 24,
     },
 });

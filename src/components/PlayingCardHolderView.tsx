@@ -1,27 +1,20 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import PlayingCardView from 'components/PlayingCardView';
 import PlayingCard from 'models/PlayingCard';
 import BasicAnimation from 'models/BasicAnimation';
 
 /**
- * A playing card holder Component.
- * @description Automatically aligns the playing cards to the center.
+ * A playing card content holder.
+ * @summary Automatically aligns the playing cards to the center of the view.
  */
 const PlayingCardHolderView = (props: Props): JSX.Element => {
-    const { cards, initialOffsetX = 150, offsetAnimationDuration = 500 } = props;
+    const { style, cards, initialOffsetX = 150, offsetAnimationDuration = 500 } = props;
 
-    /**
-     * Calculates and returns the x-position offset of a card.
-     * @param numCards The number of cards being rendered.
-     * @param i The index of the current card.
-     */
+    // Calculates and returns the x-position offset of a card
     const getOffsetX = (numCards: number, i: number) => (i + 1) * Math.round(100 / (numCards + 1));
 
-    /**
-     * Processes the position of each card and returns a JSX Element array.
-     * @param cards The cards to render.
-     */
+    // Processes the position of each card and returns a JSX Element array.
     const renderCards = (cards: PlayingCard[]) => {
         const numCards = cards.length;
         return cards.map((card, i) => {
@@ -43,7 +36,7 @@ const PlayingCardHolderView = (props: Props): JSX.Element => {
         });
     };
 
-    return <View style={styles.container}>{renderCards(cards)}</View>;
+    return <View style={StyleSheet.flatten([styles.container, style])}>{renderCards(cards)}</View>;
 };
 
 // Specify when to re-render
@@ -53,11 +46,12 @@ export default React.memo(
 );
 
 interface Props {
+    style?: StyleProp<ViewStyle>;
     /** The playing cards to render. */
     cards: PlayingCard[];
-    /** Card offset X. */
+    /** The card x-offset. */
     initialOffsetX?: number;
-    /** Offset movement animation duration. */
+    /** The offset-to-center movement animation duration. */
     offsetAnimationDuration?: number;
 }
 

@@ -4,16 +4,22 @@
 const Color = {
     white: '#FFFFFF',
     black: '#000000',
-    lightGray: '#555555',
+    lightGray: '#D3D3D3',
+    darkGray: '#3E3E3E',
     casinoGreen: '#009900',
     casinoRed: '#DC1C13',
-    mangoGradient: ['#FFE259', '#FFA751'],
-    verBlackGradient: ['#F7F8F8', '#ACBB78'],
-    midnightCityGradient: ['#232526', '#414345'],
-    titaniumGradient: ['#414345', '#859398'],
-    littleLeafGradient: ['#76b852', '#8DC26F'],
-    kennedyGradient: ['#3BB78F', '#0BAB64'],
-    newGradient: ['#ABBAAB', '#FFFFFF'],
+    casinoOrange: '#ED872D',
+    gradient: {
+        mangoGradient: ['#FFE259', '#FFA751'],
+        verBlackGradient: ['#F7F8F8', '#ACBB78'],
+        midnightCityGradient: ['#232526', '#414345'],
+        titaniumGradient: ['#859398', '#414345'],
+        littleLeafGradient: ['#76b852', '#8DC26F'],
+        kennedyGradient: ['#3BB78F', '#0BAB64'],
+        newGradient: ['#ABBAAB', '#FFFFFF'],
+        htmlGradient: ['#F16529', '#E44D26'],
+        hydrogenGradient: ['#0082C8', '#0082C8'],
+    },
 };
 
 export default Color;
@@ -21,15 +27,21 @@ export default Color;
 /**
  * Converts a Color attribute to RGB(A).
  * @param hex The hexadecimal string value.
- * @param alpha Optional alpha value.
+ * @param alpha Optional alpha value [0, 1].
  */
-export const ColorToRGB = (hex: string, alpha?: number): string => hexToRGB(hex, alpha);
-
-const hexToRGB = (hex: string, alpha?: number): string => {
+export const HexToRGB = (hex: string, alpha?: number): string => {
     const h = '0123456789ABCDEF';
     const r = h.indexOf(hex[1]) * 16 + h.indexOf(hex[2]);
     const g = h.indexOf(hex[3]) * 16 + h.indexOf(hex[4]);
     const b = h.indexOf(hex[5]) * 16 + h.indexOf(hex[6]);
     if (typeof alpha !== 'undefined') return `rgba(${r}, ${g}, ${b}, ${alpha})`;
     return `rgb(${r}, ${g}, ${b})`;
+};
+
+/**
+ * Flips the given gradient colors to opposite ends.
+ * @param gradient The hexadecimal array of color points.
+ */
+export const flipGradient = (gradient: string[]): string[] => {
+    return gradient.reverse();
 };

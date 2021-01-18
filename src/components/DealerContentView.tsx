@@ -4,7 +4,7 @@ import PlayingCardHolderView from 'components/PlayingCardHolderView';
 import PlayingCard from 'models/PlayingCard';
 
 /**
- * The Dealer's card and deck contents Component.
+ * The blackjack dealer's contents including the cards.
  */
 const DealerContentView = (props: Props): JSX.Element => {
     const { style, cards } = props;

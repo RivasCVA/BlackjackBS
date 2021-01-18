@@ -8,7 +8,10 @@ import { ScrollView } from 'react-native-gesture-handler';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const chart1Image = require('assets/charts/chart-1.png');
 
-const ChartGuideScreen = (props: Props): JSX.Element => {
+/**
+ * A modal screen to show the active Basic Strategy Chart.
+ */
+const ChartScreen = (props: Props): JSX.Element => {
     return (
         <View style={styles.container}>
             <View style={styles.view}>
@@ -37,7 +40,7 @@ const ChartGuideScreen = (props: Props): JSX.Element => {
     );
 };
 
-export default ChartGuideScreen;
+export default ChartScreen;
 
 type Props = NavigationStackScreenProps;
 

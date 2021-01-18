@@ -2,11 +2,10 @@ import { ImageSourcePropType } from 'react-native';
 import PlayingCardType from './PlayingCardType';
 
 /**
- * Provides the properties of a playing card.
+ * Holds the properties of a playing card.
  * @param cardType The card to assign ('random' assigns a random card).
  */
 export default class PlayingCard {
-    // Holds the card properties
     private card;
 
     constructor(cardType: keyof typeof PlayingCardType | 'random') {
@@ -15,6 +14,7 @@ export default class PlayingCard {
 
     /**
      * Fetches a random card from the CardType object.
+     * @returns An object with the card's properties.
      */
     private getRandomCard = (): { id: string; image: ImageSourcePropType } => {
         const keys = Object.keys(PlayingCardType) as (keyof typeof PlayingCardType)[];

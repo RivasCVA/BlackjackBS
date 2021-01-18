@@ -1,6 +1,3 @@
-// To import icon images
-/* eslint-disable global-require */
-
 import React from 'react';
 import {
     StyleSheet,
@@ -13,7 +10,7 @@ import {
 import BasicHaptic from 'models/BasicHaptic';
 
 /**
- * A basic button with an icon image.
+ * A button with an icon image.
  */
 const IconButton = (props: Props): JSX.Element => {
     const { style, icon, onPress, haptic = false } = props;
@@ -34,7 +31,9 @@ export default IconButton;
 
 interface Props {
     style?: StyleProp<ViewStyle>;
+    /** The image icon to render on the button. */
     icon: keyof typeof Icon;
+    /** Button touch event. */
     onPress: (event: GestureResponderEvent) => void;
     /** Enable haptic feedback. */
     haptic?: boolean;

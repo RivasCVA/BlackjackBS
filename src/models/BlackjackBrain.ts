@@ -1,20 +1,20 @@
-// Disable to use require to import JSON Basic Strategy Charts.
-/* eslint-disable global-require */
-
 import PlayingCardType from './PlayingCardType';
 import PlayerAction from './PlayerAction';
 import PlayingCard from './PlayingCard';
 
 /**
  * The Blackjack Brain that processes player actions and tracks scores.
+ * @yields Singleton (shared)
  */
 export default class BlackjackBrain {
-    // A singleton instance
+    /**
+     * A singleton instance.
+     * @static
+     */
     public static shared = new BlackjackBrain();
 
     private chartData: { [key: string]: { [key: string]: string } };
 
-    // Private constructor to prevent object creation outside of class
     private constructor() {
         this.chartData = require('../assets/charts/chart-1.json');
     }

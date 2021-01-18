@@ -3,16 +3,12 @@ import { StyleSheet, View, Image, ImageSourcePropType, Animated, StyleProp, View
 import Color from 'models/Color';
 
 /**
- * A playing card view Component.
+ * A playing card with a face image.
  */
 const PlayingCardView = (props: Props): JSX.Element => {
     const { style, cardImage, offsetX = 0 } = props;
 
-    /**
-     * Checks the offsetX Props value and returns the correct Style format.
-     * @param offsetX The Props offsetX value.
-     * @param defaultOffsetX The default offsetX value.
-     */
+    // Checks the offsetX Props value and returns the correct Style format.
     const processOffsetX = (offsetX: Props['offsetX']) => {
         if (offsetX instanceof Animated.Value) {
             return offsetX.interpolate({
@@ -23,9 +19,7 @@ const PlayingCardView = (props: Props): JSX.Element => {
         return `${offsetX}%`;
     };
 
-    /**
-     * Dynamic additions to the container style.
-     */
+    // Dynamic additions to the container style.
     const containerStyle = {
         ...StyleSheet.flatten([styles.container, style]),
         left: processOffsetX(offsetX),
