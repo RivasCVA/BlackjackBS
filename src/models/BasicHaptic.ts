@@ -1,5 +1,5 @@
 import * as Haptics from 'expo-haptics';
-import StorageManager from 'models/StorageManager';
+import { AvailableKeys } from 'models/StorageManager';
 
 /**
  * A Haptic Feedback wrapper.
@@ -42,18 +42,13 @@ export default class BasicHaptic {
      * @static
      */
     public static generate = (haptic: keyof typeof BasicHaptic.HapticStyle, delay = 0): void => {
-        StorageManager.shared
-            .getItem('save_hapticFeedbackEnabled')
-            .then((value) => {
-                if (value === 'true') {
-                    const interval = setInterval(() => {
-                        BasicHaptic.HapticStyle[haptic]();
-                        clearInterval(interval);
-                    }, delay);
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        AvailableKeys.save_hapticFeedbackEnabled.get().then((value) => {
+            if (value) {
+                const interval = setInterval(() => {
+                    BasicHaptic.HapticStyle[haptic]();
+                    clearInterval(interval);
+                }, delay);
+            }
+        });
     };
 }

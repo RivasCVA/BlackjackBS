@@ -1,6 +1,8 @@
-import PlayingCardType from './PlayingCardType';
-import PlayerAction from './PlayerAction';
-import PlayingCard from './PlayingCard';
+import PlayingCardType from 'models/PlayingCardType';
+import PlayerAction from 'models/PlayerAction';
+import PlayingCard from 'models/PlayingCard';
+import { AvailableKeys } from 'models/StorageManager';
+import BasicChartManager from 'models/BasicChartManager';
 
 /**
  * The Blackjack Brain that processes player actions and tracks scores.
@@ -13,10 +15,12 @@ export default class BlackjackBrain {
      */
     public static shared = new BlackjackBrain();
 
-    private chartData: { [key: string]: { [key: string]: string } };
+    private chartData: { [key: string]: { [key: string]: string } } = {};
 
     private constructor() {
-        this.chartData = require('../assets/charts/chart-1.json');
+        AvailableKeys.save_activeChartID.get().then((chartID) => {
+            this.chartData = BasicChartManager.getChartFromID(chartID);
+        });
     }
 
     /**

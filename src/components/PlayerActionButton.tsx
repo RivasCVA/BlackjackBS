@@ -20,8 +20,8 @@ const PlayerActionButton = (props: Props): JSX.Element => {
     const { style, title, titleStyle, onPress, disabled = false, haptic = false } = props;
 
     const handleOnPress = (event: GestureResponderEvent) => {
-        onPress(event);
         if (haptic) BasicHaptic.generate('impactLight');
+        onPress(event);
     };
 
     return (

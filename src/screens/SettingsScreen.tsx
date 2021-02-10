@@ -5,13 +5,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { FlatGrid } from 'react-native-super-grid';
 import ChartOptionButton from 'components/ChartOptionButton';
 import IconButton from 'components/IconButton';
+import SwitchOptionView from 'components/SwitchOptionView';
+import BasicChartManager from 'models/BasicChartManager';
 import Color from 'models/Color';
 import Font from 'models/Font';
-import StorageManager from 'models/StorageManager';
-import SwitchOptionView from 'components/SwitchOptionView';
-
-// Import the chart data
-import * as BasicStrategyChartData from 'assets/charts/chart.json';
+import { AvailableKeys } from 'models/StorageManager';
 
 /**
  * The BlackjackBS settings screen.
@@ -21,55 +19,33 @@ const SettignsScreen = (props: Props): JSX.Element => {
     const [hapticFeedbackEnabled, setHapticFeedbackEnabled] = useState(false);
     const SCREEN_WIDTH = Dimensions.get('window').width;
 
-    // Setup activeChartID
+    // Setup saved user settings
     useEffect(() => {
-        StorageManager.shared
-            .getItem('save_activeChartID')
-            .then((value) => {
-                setActiveChartID(value);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-        StorageManager.shared
-            .getItem('save_hapticFeedbackEnabled')
-            .then((value) => {
-                setHapticFeedbackEnabled(value === 'true');
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        const fetchSettings = async () => {
+            setActiveChartID(await AvailableKeys.save_activeChartID.get());
+            setHapticFeedbackEnabled(await AvailableKeys.save_hapticFeedbackEnabled.get());
+        };
+        fetchSettings();
     }, []);
 
-    const handleChartOption = (chartID: string) => {
-        StorageManager.shared
-            .setItem('save_activeChartID', chartID)
-            .then(() => {
-                setActiveChartID(chartID);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+    const handleChartOptionButton = (chartID: string) => {
+        AvailableKeys.save_activeChartID.set(chartID);
+        setActiveChartID(chartID);
     };
 
     const handleHapticFeedbackSwitch = (value: boolean) => {
-        StorageManager.shared
-            .setItem('save_hapticFeedbackEnabled', value ? 'true' : 'false')
-            .then(() => {
-                setHapticFeedbackEnabled(value);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        AvailableKeys.save_hapticFeedbackEnabled.set(value);
+        setHapticFeedbackEnabled(value);
     };
 
     return (
-        <LinearGradient style={styles.container} colors={Color.gradient.hydrogenGradient}>
+        <LinearGradient style={styles.container} colors={Color.gradient.htmlGradient}>
             <SafeAreaView style={styles.container}>
                 <IconButton
                     style={styles.closeButton}
                     icon="Close"
                     onPress={() => props.navigation.goBack(null)}
+                    haptic
                 />
                 <Text style={styles.title}>Settings</Text>
                 <View style={styles.switchOptionsContainer}>
@@ -85,14 +61,14 @@ const SettignsScreen = (props: Props): JSX.Element => {
                         contentContainerStyle={styles.flatGrid}
                         itemDimension={SCREEN_WIDTH}
                         spacing={10}
-                        data={BasicStrategyChartData.charts}
+                        data={Object.keys(BasicChartManager.ChartGuide.charts)}
                         renderItem={({ item }) => {
                             return (
                                 <ChartOptionButton
                                     haptic
-                                    chartID={item.id}
-                                    onPress={() => handleChartOption(item.id)}
-                                    isSelected={activeChartID === item.id}
+                                    chartID={item}
+                                    onPress={() => handleChartOptionButton(item)}
+                                    isSelected={activeChartID === item}
                                 />
                             );
                         }}

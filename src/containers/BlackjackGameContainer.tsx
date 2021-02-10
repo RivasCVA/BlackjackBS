@@ -40,10 +40,10 @@ const BlackjackGameContainer = (): JSX.Element => {
             // Show action response and generate feedback
             if (BlackjackBrain.shared.checkAction(playerCards, dealerCards, action)) {
                 setPlayerActionResponse('Correct');
-                BasicHaptic.generate('impactMedium', 100);
+                BasicHaptic.generate('impactMedium', 40);
             } else {
                 setPlayerActionResponse('Wrong');
-                BasicHaptic.generate('impactHeavy', 100);
+                BasicHaptic.generate('impactHeavy', 40);
             }
 
             // Delay next hand
@@ -66,7 +66,7 @@ const BlackjackGameContainer = (): JSX.Element => {
     useEffect(() => {
         setCanSplit(BlackjackBrain.shared.canSplit(playerCards));
         if (BlackjackBrain.shared.isBlackjack(playerCards)) {
-            onPlayerAction(PlayerAction.Stay);
+            onPlayerAction(PlayerAction.Stand);
         }
     }, [onPlayerAction, playerCards]);
 

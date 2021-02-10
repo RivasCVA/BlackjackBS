@@ -26,7 +26,7 @@ const PlayerContentView = (props: Props): JSX.Element => {
                         style={styles.actionButton}
                         title="Stay"
                         onPress={() => {
-                            onAction(PlayerAction.Stay);
+                            onAction(PlayerAction.Stand);
                         }}
                     />
                 </View>

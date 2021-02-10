@@ -1,5 +1,5 @@
 import { ImageSourcePropType } from 'react-native';
-import PlayingCardType from './PlayingCardType';
+import PlayingCardType from 'models/PlayingCardType';
 
 /**
  * Holds the properties of a playing card.

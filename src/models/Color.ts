@@ -9,6 +9,11 @@ const Color = {
     casinoGreen: '#009900',
     casinoRed: '#DC1C13',
     casinoOrange: '#ED872D',
+    leafGreen: '#55AE3A',
+    chartGreen: '#92D050',
+    chartYellow: '#FFFF66',
+    chartBlue: '#00B0F0',
+    chartRed: '#EF2648',
     gradient: {
         mangoGradient: ['#FFE259', '#FFA751'],
         verBlackGradient: ['#F7F8F8', '#ACBB78'],
@@ -18,7 +23,7 @@ const Color = {
         kennedyGradient: ['#3BB78F', '#0BAB64'],
         newGradient: ['#ABBAAB', '#FFFFFF'],
         htmlGradient: ['#F16529', '#E44D26'],
-        hydrogenGradient: ['#0082C8', '#0082C8'],
+        blueSkiesGradient: ['#2F80ED', '#56CCF2'],
     },
 };
 

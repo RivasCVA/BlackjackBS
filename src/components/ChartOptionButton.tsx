@@ -8,19 +8,17 @@ import {
     ViewStyle,
     GestureResponderEvent,
 } from 'react-native';
+import BasicChartManager from 'models/BasicChartManager';
 import Font from 'models/Font';
 import Color from 'models/Color';
 import BasicHaptic from 'models/BasicHaptic';
-
-// Import the chart data.
-import * as ChartData from 'assets/charts/chart.json';
 
 /**
  * A button styled to select a Basic Strategy Chart.
  */
 const ChartOptionButton = (props: Props): JSX.Element => {
     const { style, chartID, onPress, isSelected = false, haptic = false } = props;
-    const chart = ChartData.charts.find((chart) => chart.id === chartID);
+    const chart = Object(BasicChartManager.ChartGuide.charts)[chartID];
 
     const handleOnPress = (event: GestureResponderEvent) => {
         onPress(event);
@@ -54,11 +52,9 @@ export default ChartOptionButton;
 
 interface Props {
     style?: StyleProp<ViewStyle>;
-    /**
-     * The ID of the Basic Strategy Chart data to display.
-     * @see chart.json.
-     */
+    /** The ID of the Basic Strategy Chart data to display. */
     chartID: string;
+    /** Triggers on button press. */
     onPress: (event: GestureResponderEvent) => void;
     /** When true, the styling of the button changes to symbolize selection. */
     isSelected?: boolean;
@@ -76,31 +72,24 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 85,
         backgroundColor: Color.casinoOrange,
-        borderRadius: 16,
-        borderColor: Color.lightGray,
+        borderRadius: 14,
+        borderColor: Color.white,
         borderWidth: 3,
         shadowColor: Color.black,
-        shadowOpacity: 0.65,
-        shadowRadius: 3,
+        shadowOpacity: 0.5,
+        shadowRadius: 2,
         shadowOffset: {
-            width: -5,
+            width: 0,
             height: 2,
         },
     },
     selected: {
-        borderColor: Color.white,
-        shadowColor: Color.white,
-        shadowOpacity: 0.75,
-        shadowRadius: 2,
-        shadowOffset: {
-            width: 0,
-            height: 3,
-        },
+        backgroundColor: Color.leafGreen,
     },
     title: {
         textAlign: 'center',
         textDecorationLine: 'underline',
-        fontFamily: Font('Poppins-Bold'),
+        fontFamily: Font('Poppins-Medium'),
         fontSize: 18,
         color: Color.white,
     },
@@ -114,12 +103,12 @@ const styles = StyleSheet.create({
         marginVertical: 1,
     },
     detailsTitle: {
-        fontFamily: Font('Poppins-Bold'),
+        fontFamily: Font('Poppins-Regular'),
         fontSize: 14,
         color: Color.white,
     },
     detailsText: {
-        fontFamily: Font('Poppins-Medium'),
+        fontFamily: Font('Poppins-Regular'),
         fontSize: 14,
         color: Color.white,
         paddingLeft: 5,

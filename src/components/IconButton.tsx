@@ -16,8 +16,8 @@ const IconButton = (props: Props): JSX.Element => {
     const { style, icon, onPress, haptic = false } = props;
 
     const handleOnPress = (event: GestureResponderEvent) => {
-        onPress(event);
         if (haptic) BasicHaptic.generate('impactLight');
+        onPress(event);
     };
 
     return (

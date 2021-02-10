@@ -3,7 +3,7 @@
  */
 enum PlayerAction {
     Hit = 'H',
-    Stay = 'S',
+    Stand = 'S',
     Split = 'SP',
     DoubleDown = 'D',
 }

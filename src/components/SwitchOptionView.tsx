@@ -12,7 +12,7 @@ const SwitchOptionView = (props: Props): JSX.Element => {
         <View style={StyleSheet.flatten([styles.container, style])}>
             <Text style={styles.text}>{text}</Text>
             <Switch
-                trackColor={{ false: Color.white, true: Color.casinoGreen }}
+                trackColor={{ false: Color.white, true: Color.leafGreen }}
                 thumbColor={Color.white}
                 ios_backgroundColor={Color.darkGray}
                 onValueChange={onValueChange}
@@ -47,11 +47,18 @@ const styles = StyleSheet.create({
         backgroundColor: Color.casinoOrange,
         borderRadius: 14,
         borderColor: Color.white,
-        borderWidth: 2,
+        borderWidth: 3,
+        shadowColor: Color.black,
+        shadowOpacity: 0.5,
+        shadowRadius: 2,
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
     },
     text: {
-        fontFamily: Font('Poppins-Medium'),
-        fontSize: 16,
+        fontFamily: Font('Rubik-Medium'),
+        fontSize: 18,
         color: Color.white,
     },
 });
