@@ -14,15 +14,15 @@ import Color from 'models/Color';
 import BasicHaptic from 'models/BasicHaptic';
 
 /**
- * A button styled to select a Basic Strategy Chart.
+ * A button styled for selecting a Basic Strategy Chart.
  */
 const ChartOptionButton = (props: Props): JSX.Element => {
-    const { style, chartID, onPress, isSelected = false, haptic = false } = props;
+    const { style, chartID, onPress, isSelected = false, hapticFeedback: haptic = false } = props;
     const chart = Object(BasicChartManager.ChartGuide.charts)[chartID];
 
     const handleOnPress = (event: GestureResponderEvent) => {
-        onPress(event);
         if (haptic) BasicHaptic.generate('impactLight');
+        onPress(event);
     };
 
     if (!chart) return <Text>Chart Not Found!</Text>;
@@ -35,10 +35,6 @@ const ChartOptionButton = (props: Props): JSX.Element => {
         >
             <Text style={styles.title}>{chart.title}</Text>
             <View style={styles.details}>
-                {/* <View style={styles.detailsContent}>
-                    <Text style={styles.detailsTitle}>Dealer-Stands:</Text>
-                    <Text style={styles.detailsText}>{chart.dealerStands}</Text>
-                </View> */}
                 <View style={styles.detailsContent}>
                     <Text style={styles.detailsTitle}>Decks:</Text>
                     <Text style={styles.detailsText}>{chart.decks}</Text>
@@ -52,14 +48,14 @@ export default ChartOptionButton;
 
 interface Props {
     style?: StyleProp<ViewStyle>;
-    /** The ID of the Basic Strategy Chart data to display. */
+    /** The ID of the Basic Strategy Chart to display. */
     chartID: string;
     /** Triggers on button press. */
     onPress: (event: GestureResponderEvent) => void;
     /** When true, the styling of the button changes to symbolize selection. */
     isSelected?: boolean;
     /** Enable haptic feedback. */
-    haptic?: boolean;
+    hapticFeedback?: boolean;
 }
 
 const styles = StyleSheet.create({

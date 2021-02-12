@@ -6,10 +6,11 @@ import PlayerAction from 'models/PlayerAction';
 import PlayingCard from 'models/PlayingCard';
 
 /**
- * The blackjack player's contents including the cards and action buttons.
+ * The blackjack player's contents including their cards and action buttons.
  */
 const PlayerContentView = (props: Props): JSX.Element => {
     const { style, cards, onAction, splitButtonEnabled = false } = props;
+
     return (
         <View style={StyleSheet.flatten([styles.container, style])}>
             <PlayingCardHolderView cards={cards} />

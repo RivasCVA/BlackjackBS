@@ -13,7 +13,7 @@ import BasicHaptic from 'models/BasicHaptic';
  * A button with an icon image.
  */
 const IconButton = (props: Props): JSX.Element => {
-    const { style, icon, onPress, haptic = false } = props;
+    const { style, icon, onPress, hapticFeedback: haptic = false } = props;
 
     const handleOnPress = (event: GestureResponderEvent) => {
         if (haptic) BasicHaptic.generate('impactLight');
@@ -36,7 +36,7 @@ interface Props {
     /** Button touch event. */
     onPress: (event: GestureResponderEvent) => void;
     /** Enable haptic feedback. */
-    haptic?: boolean;
+    hapticFeedback?: boolean;
 }
 
 const styles = StyleSheet.create({

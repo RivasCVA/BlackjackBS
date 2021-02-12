@@ -5,7 +5,7 @@ import Color, { HexToRGB } from 'models/Color';
 import BasicAnimation from 'models/BasicAnimation';
 
 /**
- * A modal displaying an animated icon of a player action reponse.
+ * A modal displaying an animated icon depicting player action reponse.
  */
 const PlayerActionResponseModal = (props: Props): JSX.Element => {
     const { style, responseIcon, responseIconStyle, visible, animationDuration = 1250 } = props;

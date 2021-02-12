@@ -1,13 +1,13 @@
 import React, { useCallback, useState } from 'react';
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { Table, TableWrapper, Row, Cell } from 'react-native-table-component';
-import PlayerAction from 'models/PlayerAction';
 import BasicChartManager from 'models/BasicChartManager';
-import Font from 'models/Font';
+import PlayerAction from 'models/PlayerAction';
 import Color from 'models/Color';
+import Font from 'models/Font';
 
 /**
- * A zoomable chart displaying the active chart guide.
+ * A zoomable chart displaying the active Basic Strategy Chart.
  */
 const BasicStrategyChart = (props: Props): JSX.Element => {
     const { style, chartID, highlightHand } = props;
@@ -54,7 +54,7 @@ const BasicStrategyChart = (props: Props): JSX.Element => {
         '2,2',
     ];
 
-    // Rotates given array to the right
+    // Rotates given array clockwise
     const rotate90Degrees = (array: string[][]) => {
         const result: string[][] = [];
         array.forEach((a, i, aa) => {
@@ -66,28 +66,29 @@ const BasicStrategyChart = (props: Props): JSX.Element => {
         return result;
     };
 
+    // Formats the chart data in a 2D array
     const getData = useCallback((): string[][] => {
         const data: string[][] = [];
         dealerValues.forEach((dealerValue) => {
             if (dealerValue in chart) {
-                const chartColumn = chart[dealerValue];
+                const column = chart[dealerValue];
                 const columnData: string[] = [];
                 playerValues.forEach((playerValue) => {
-                    if (playerValue in chartColumn) {
-                        columnData.push(chartColumn[playerValue]);
+                    if (playerValue in column) {
+                        columnData.push(column[playerValue]);
                     } else {
-                        console.log(`Could Not Find ${playerValue} Within ${dealerValue} in Chart JSON!`);
+                        console.log(`Could not find ${playerValue} within ${dealerValue} in chart JSON!`);
                     }
                 });
                 data.push(columnData);
             } else {
-                console.log(`Could Not Find ${dealerValue} in Chart JSON!`);
+                console.log(`Could not find ${dealerValue} in chart JSON!`);
             }
         });
         return rotate90Degrees(data.reverse());
     }, [chart, dealerValues, playerValues]);
 
-    // Gets cell color based on Player Action
+    // Gets cell color based on the Player Action
     const getCellColor = (action: string) => {
         switch (action) {
             case PlayerAction.Stand:
@@ -103,9 +104,19 @@ const BasicStrategyChart = (props: Props): JSX.Element => {
         }
     };
 
-    // Creates and returns the chart data item cells
-    const getItemCells = () =>
-        playerValues.map((playerValue, i) => {
+    // Gets cell color based on whether the given item is to be selected or not
+    const getBackgroundColor = (dealerValue: string, playerValue: string, action: string) => {
+        const currentHand = [dealerValue, playerValue];
+        const isDesiredCell = JSON.stringify(currentHand) === JSON.stringify(highlightHand);
+        if (highlightHand != null && isDesiredCell) {
+            return { backgroundColor: Color.casinoOrange };
+        }
+        return { backgroundColor: getCellColor(action) };
+    };
+
+    // Creates the chart item cells
+    const getItemCells = () => {
+        return playerValues.map((playerValue, i) => {
             return (
                 <TableWrapper style={styles.tableWrapperRow} key={playerValue + i.toString(10)}>
                     <Cell
@@ -115,18 +126,12 @@ const BasicStrategyChart = (props: Props): JSX.Element => {
                     />
                     {dealerValues.map((dealerValue, j) => {
                         const action = getData()[i][j];
-                        const getBackgroundColor = () => {
-                            const currentHand = [dealerValue, playerValue];
-                            const isDesiredCell =
-                                JSON.stringify(currentHand) === JSON.stringify(highlightHand);
-                            if (highlightHand != null && isDesiredCell) {
-                                return { backgroundColor: Color.casinoOrange };
-                            }
-                            return { backgroundColor: getCellColor(action) };
-                        };
                         return (
                             <Cell
-                                style={StyleSheet.flatten([styles.item, getBackgroundColor()])}
+                                style={StyleSheet.flatten([
+                                    styles.item,
+                                    getBackgroundColor(dealerValue, playerValue, action),
+                                ])}
                                 textStyle={styles.itemText}
                                 data={action}
                                 key={dealerValue + j.toString(10)}
@@ -136,6 +141,7 @@ const BasicStrategyChart = (props: Props): JSX.Element => {
                 </TableWrapper>
             );
         });
+    };
 
     return (
         <View style={StyleSheet.flatten([styles.container, style])}>

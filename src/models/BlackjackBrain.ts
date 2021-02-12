@@ -15,11 +15,12 @@ export default class BlackjackBrain {
      */
     public static shared = new BlackjackBrain();
 
-    private chartData: { [key: string]: { [key: string]: string } } = {};
+    /** The Basic Strategy Chart data. */
+    private chart: { [key: string]: { [key: string]: string } } = {};
 
     private constructor() {
         AvailableKeys.save_activeChartID.get().then((chartID) => {
-            this.chartData = BasicChartManager.getChartFromID(chartID);
+            this.chart = BasicChartManager.getChartFromID(chartID);
         });
     }
 
@@ -44,12 +45,12 @@ export default class BlackjackBrain {
 
         // Checks for specific player card pairs in the chart
         let expectedAction: string | undefined;
-        expectedAction = this.chartData[dealerCardSymbol][playerCardSymbols.join(',')];
+        expectedAction = this.chart[dealerCardSymbol][playerCardSymbols.join(',')];
         if (expectedAction) return expectedAction === action.toString();
 
         // Check for player card values in the chart
         const playerCardValues = playerCardSymbols.map((symbol) => this.getValueFromSymbol(symbol));
-        expectedAction = this.chartData[dealerCardSymbol][
+        expectedAction = this.chart[dealerCardSymbol][
             `${playerCardValues.reduce((prev, curr) => prev + curr)}`
         ];
         if (expectedAction) return expectedAction === action.toString();
@@ -92,13 +93,11 @@ export default class BlackjackBrain {
     };
 
     /**
-     * Processes the given Symbol by converting it to its corresponding number value.
+     * Processes the given symbol by converting it to its corresponding number value.
      * @param symbol The processed card symbol to extract the value from.
      */
     private getValueFromSymbol = (symbol: string): number => {
-        if (this.isLetter(symbol)) {
-            return symbol !== 'A' ? 10 : 11;
-        }
+        if (this.isLetter(symbol)) return symbol !== 'A' ? 10 : 11;
         return parseInt(symbol, 10);
     };
 

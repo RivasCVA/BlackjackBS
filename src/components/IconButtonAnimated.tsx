@@ -8,7 +8,15 @@ import BasicAnimation from 'models/BasicAnimation';
  * A button with an animated icon.
  */
 const IconButtonAnimated = (props: Props): JSX.Element => {
-    const { style, icon, onPress, haptic = false, animationDuration = 0, animationDelay = 0 } = props;
+    const {
+        style,
+        icon,
+        onPress,
+        hapticFeedback: haptic = false,
+        animationDuration = 0,
+        animationDelay = 0,
+    } = props;
+
     const animationProgress = new BasicAnimation.Value(0);
 
     // Start the animation progress if a duration is present
@@ -26,15 +34,13 @@ const IconButtonAnimated = (props: Props): JSX.Element => {
     }, [animationDelay, animationDuration, animationProgress]);
 
     const handleOnPress = (event: GestureResponderEvent) => {
-        onPress(event);
         if (haptic) BasicHaptic.generate('impactLight');
+        onPress(event);
     };
 
     // Renders the animation with a custom duration if present. Defaults to autoplay.
     const renderAnimation = () => {
-        if (!animationDuration) {
-            return <LottieView style={styles.icon} source={Icon[icon]} autoPlay loop />;
-        }
+        if (!animationDuration) return <LottieView style={styles.icon} source={Icon[icon]} autoPlay loop />;
         return <LottieView style={styles.icon} source={Icon[icon]} progress={animationProgress} />;
     };
 
@@ -54,7 +60,7 @@ interface Props {
     /** Button touch event. */
     onPress: (event: GestureResponderEvent) => void;
     /** Enable haptic feedback. */
-    haptic?: boolean;
+    hapticFeedback?: boolean;
     /** The time duration of the animation (in milliseconds). */
     animationDuration?: number;
     /** The time delay between each animation loop (in milliseconds). */

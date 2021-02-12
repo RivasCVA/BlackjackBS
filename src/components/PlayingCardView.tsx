@@ -8,7 +8,7 @@ import Color from 'models/Color';
 const PlayingCardView = (props: Props): JSX.Element => {
     const { style, cardImage, offsetX = 0 } = props;
 
-    // Checks the offsetX Props value and returns the correct Style format.
+    // Checks the offsetX Props value and returns the correct style format.
     const processOffsetX = (offsetX: Props['offsetX']) => {
         if (offsetX instanceof Animated.Value) {
             return offsetX.interpolate({

@@ -72,7 +72,7 @@ const SettignsScreen = (props: Props): JSX.Element => {
                     style={styles.closeButton}
                     icon="Close"
                     onPress={() => props.navigation.goBack(null)}
-                    haptic
+                    hapticFeedback
                 />
                 <Text style={styles.title}>Settings</Text>
                 <View style={styles.switchOptionsContainer}>
@@ -102,7 +102,7 @@ const SettignsScreen = (props: Props): JSX.Element => {
                         renderItem={({ item }) => {
                             return (
                                 <ChartOptionButton
-                                    haptic
+                                    hapticFeedback
                                     chartID={item}
                                     onPress={() => handleChartOptionButton(item)}
                                     isSelected={activeChartID === item}

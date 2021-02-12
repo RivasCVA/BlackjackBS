@@ -9,15 +9,15 @@ import {
     TextStyle,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import BasicHaptic from 'models/BasicHaptic';
 import Color from 'models/Color';
 import Font from 'models/Font';
-import BasicHaptic from 'models/BasicHaptic';
 
 /**
  * A blackjack player action button.
  */
 const PlayerActionButton = (props: Props): JSX.Element => {
-    const { style, title, titleStyle, onPress, disabled = false, haptic = false } = props;
+    const { style, title, titleStyle, onPress, disabled = false, hapticFeedback: haptic = false } = props;
 
     const handleOnPress = (event: GestureResponderEvent) => {
         if (haptic) BasicHaptic.generate('impactLight');
@@ -64,7 +64,7 @@ interface Props {
     /** When disabled, the button events are disabled and opacity is reduced. */
     disabled?: boolean;
     /** Enable haptic feedback */
-    haptic?: boolean;
+    hapticFeedback?: boolean;
 }
 
 const styles = StyleSheet.create({

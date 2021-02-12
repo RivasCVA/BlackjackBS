@@ -14,8 +14,12 @@ const BlackjackScreen = (props: Props): JSX.Element => {
         <LinearGradient style={styles.container} colors={Color.gradient.kennedyGradient}>
             <SafeAreaView style={styles.container}>
                 <View style={styles.optionsBar}>
-                    <IconButton icon="Close" haptic onPress={() => props.navigation.goBack(null)} />
-                    <IconButton icon="Search" haptic onPress={() => props.navigation.navigate('Chart')} />
+                    <IconButton icon="Close" hapticFeedback onPress={() => props.navigation.goBack(null)} />
+                    <IconButton
+                        icon="Search"
+                        hapticFeedback
+                        onPress={() => props.navigation.navigate('Chart')}
+                    />
                 </View>
                 <BlackjackGameContainer />
             </SafeAreaView>

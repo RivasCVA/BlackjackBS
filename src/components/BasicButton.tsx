@@ -30,6 +30,7 @@ interface Props {
     title: string;
     /** The button title style. */
     titleStyle?: StyleProp<TextStyle>;
+    /** Touch event. */
     onPress: (event: GestureResponderEvent) => void;
 }
 

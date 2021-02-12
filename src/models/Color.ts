@@ -47,6 +47,4 @@ export const HexToRGB = (hex: string, alpha?: number): string => {
  * Flips the given gradient colors to opposite ends.
  * @param gradient The hexadecimal array of color points.
  */
-export const flipGradient = (gradient: string[]): string[] => {
-    return gradient.reverse();
-};
+export const flipGradient = (gradient: string[]): string[] => gradient.reverse();
