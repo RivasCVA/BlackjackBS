@@ -16,6 +16,8 @@ import Font from 'models/Font';
 const ChartScreen = (props: Props): JSX.Element => {
     const [chartID, setChartID] = useState<string>('');
     const [chartDetails, setChartDetails] = useState<{ [key: string]: string }>({});
+    const [dealerStandsSoft17, setDealerStandsSoft17] = useState(false);
+    const [doubleAfterSplitAllowed, setDoubleAfterSplitAllowed] = useState(false);
     const contentOpacity = new BasicAnimation.Value(0);
 
     // Did Mount
@@ -24,6 +26,19 @@ const ChartScreen = (props: Props): JSX.Element => {
             setChartID(chartID);
             setChartDetails(BasicChartManager.getChartDetailsFromID(chartID));
             BasicAnimation.easeValue(contentOpacity, 1, 500).start();
+            if (chartID.includes('DHNDAS')) {
+                setDealerStandsSoft17(false);
+                setDoubleAfterSplitAllowed(false);
+            } else if (chartID.includes('DH')) {
+                setDealerStandsSoft17(false);
+                setDoubleAfterSplitAllowed(true);
+            } else if (chartID.includes('NDAS')) {
+                setDealerStandsSoft17(true);
+                setDoubleAfterSplitAllowed(false);
+            } else {
+                setDealerStandsSoft17(true);
+                setDoubleAfterSplitAllowed(true);
+            }
         });
     }, [contentOpacity]);
 
@@ -41,8 +56,13 @@ const ChartScreen = (props: Props): JSX.Element => {
                 >
                     <Text style={styles.chartTitle}>{chartDetails.title}</Text>
                     <View style={{ justifyContent: 'center' }}>
-                        <Text style={styles.chartDetails}>Dealer Stands: {chartDetails.dealerStands}</Text>
                         <Text style={styles.chartDetails}>Decks: {chartDetails.decks}</Text>
+                        <Text style={styles.chartDetails}>
+                            Dealer: {dealerStandsSoft17 ? 'Stands Soft 17' : 'Hits Soft 17'}
+                        </Text>
+                        <Text style={styles.chartDetails}>
+                            Double After Split: {doubleAfterSplitAllowed ? 'Allowed' : 'Not Allowed'}
+                        </Text>
                     </View>
                     <BasicStrategyChart style={styles.chart} chartID={chartID} />
                     <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', paddingBottom: 50 }}>

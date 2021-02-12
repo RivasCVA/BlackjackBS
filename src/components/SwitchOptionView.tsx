@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
         width: '95%',
         height: 50,
         paddingHorizontal: 5,
+        marginVertical: 5,
         backgroundColor: Color.casinoOrange,
         borderRadius: 14,
         borderColor: Color.white,

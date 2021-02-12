@@ -35,10 +35,10 @@ const ChartOptionButton = (props: Props): JSX.Element => {
         >
             <Text style={styles.title}>{chart.title}</Text>
             <View style={styles.details}>
-                <View style={styles.detailsContent}>
+                {/* <View style={styles.detailsContent}>
                     <Text style={styles.detailsTitle}>Dealer-Stands:</Text>
                     <Text style={styles.detailsText}>{chart.dealerStands}</Text>
-                </View>
+                </View> */}
                 <View style={styles.detailsContent}>
                     <Text style={styles.detailsTitle}>Decks:</Text>
                     <Text style={styles.detailsText}>{chart.decks}</Text>
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
         paddingHorizontal: 5,
         width: '100%',
-        height: 85,
+        height: 65,
         backgroundColor: Color.casinoOrange,
         borderRadius: 14,
         borderColor: Color.white,

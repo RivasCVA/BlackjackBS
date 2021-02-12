@@ -4,21 +4,18 @@
             "id": "MDC",
             "title": "Multi-Deck Basic Strategy Chart",
             "decks": "4-8",
-            "dealerStands": "Soft 17",
             "filename": "chart-MDC"
         },
         "DDC": {
             "id": "DDC",
             "title": "Double Deck Basic Strategy Chart",
             "decks": "2",
-            "dealerStands": "Soft 17",
             "filename": "chart-DDC"
         },
         "SDC": {
             "id": "SDC",
             "title": "Single Deck Basic Strategy Chart",
             "decks": "1",
-            "dealerStands": "Soft 17",
             "filename": "chart-SDC"
         }
     }

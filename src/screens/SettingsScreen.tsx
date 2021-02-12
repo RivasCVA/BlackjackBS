@@ -15,28 +15,55 @@ import { AvailableKeys } from 'models/StorageManager';
  * The BlackjackBS settings screen.
  */
 const SettignsScreen = (props: Props): JSX.Element => {
-    const [activeChartID, setActiveChartID] = useState('');
     const [hapticFeedbackEnabled, setHapticFeedbackEnabled] = useState(false);
+    const [dealerStandsSoft17, setDealerStandsSoft17] = useState(false);
+    const [doubleAfterSplitAllowed, setDoubleAfterSplitAllowed] = useState(false);
+    const [activeChartID, setActiveChartID] = useState('');
     const SCREEN_WIDTH = Dimensions.get('window').width;
 
     // Setup saved user settings
     useEffect(() => {
         const fetchSettings = async () => {
-            setActiveChartID(await AvailableKeys.save_activeChartID.get());
             setHapticFeedbackEnabled(await AvailableKeys.save_hapticFeedbackEnabled.get());
+            setDealerStandsSoft17(await AvailableKeys.save_dealerStandsSoft17.get());
+            setDoubleAfterSplitAllowed(await AvailableKeys.save_doubleAfterSplitAllowed.get());
+            setActiveChartID((await AvailableKeys.save_activeChartID.get()).substring(0, 3));
         };
         fetchSettings();
     }, []);
-
-    const handleChartOptionButton = (chartID: string) => {
-        AvailableKeys.save_activeChartID.set(chartID);
-        setActiveChartID(chartID);
-    };
 
     const handleHapticFeedbackSwitch = (value: boolean) => {
         AvailableKeys.save_hapticFeedbackEnabled.set(value);
         setHapticFeedbackEnabled(value);
     };
+
+    const handleDealerStandsSoft17Switch = (value: boolean) => {
+        AvailableKeys.save_dealerStandsSoft17.set(value);
+        setDealerStandsSoft17(value);
+    };
+
+    const handleDoubleAfterSplitAllowedSwitch = (value: boolean) => {
+        AvailableKeys.save_doubleAfterSplitAllowed.set(value);
+        setDoubleAfterSplitAllowed(value);
+    };
+
+    const handleChartOptionButton = (chartID: string) => {
+        setActiveChartID(chartID);
+    };
+
+    // Saves new chart ID upon settings change
+    useEffect(() => {
+        const chartID = activeChartID;
+        if (!chartID) return;
+
+        let formattedChartID: string;
+        if (!dealerStandsSoft17 && !doubleAfterSplitAllowed) formattedChartID = `${chartID}DHNDAS`;
+        else if (!dealerStandsSoft17) formattedChartID = `${chartID}DH`;
+        else if (!doubleAfterSplitAllowed) formattedChartID = `${chartID}NDAS`;
+        else formattedChartID = chartID;
+
+        AvailableKeys.save_activeChartID.set(formattedChartID);
+    }, [activeChartID, dealerStandsSoft17, doubleAfterSplitAllowed]);
 
     return (
         <LinearGradient style={styles.container} colors={Color.gradient.htmlGradient}>
@@ -57,6 +84,16 @@ const SettignsScreen = (props: Props): JSX.Element => {
                 </View>
                 <View style={styles.chartOptionsContainer}>
                     <Text style={styles.chartOptionsTitle}>Chart:</Text>
+                    <SwitchOptionView
+                        text="Dealer Stands Soft 17"
+                        onValueChange={handleDealerStandsSoft17Switch}
+                        value={dealerStandsSoft17}
+                    />
+                    <SwitchOptionView
+                        text="Double After Split Allowed"
+                        onValueChange={handleDoubleAfterSplitAllowedSwitch}
+                        value={doubleAfterSplitAllowed}
+                    />
                     <FlatGrid
                         contentContainerStyle={styles.flatGrid}
                         itemDimension={SCREEN_WIDTH}

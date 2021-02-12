@@ -167,4 +167,36 @@ export const AvailableKeys = {
             return StorageManager.shared.setBooleanItem('save_hapticFeedbackEnabled', value);
         },
     },
+    save_dealerStandsSoft17: {
+        key: '@save_dealerStandsSoft17',
+        default: true,
+        get: async (): Promise<boolean> => {
+            try {
+                const value = await StorageManager.shared.getBooleanItem('save_dealerStandsSoft17');
+                return Promise.resolve(value);
+            } catch (e) {
+                console.log(e);
+                return Promise.resolve(AvailableKeys.save_dealerStandsSoft17.default);
+            }
+        },
+        set: async (value: boolean): Promise<void> => {
+            return StorageManager.shared.setBooleanItem('save_dealerStandsSoft17', value);
+        },
+    },
+    save_doubleAfterSplitAllowed: {
+        key: '@save_doubleAfterSplitAllowed',
+        default: true,
+        get: async (): Promise<boolean> => {
+            try {
+                const value = await StorageManager.shared.getBooleanItem('save_doubleAfterSplitAllowed');
+                return Promise.resolve(value);
+            } catch (e) {
+                console.log(e);
+                return Promise.resolve(AvailableKeys.save_doubleAfterSplitAllowed.default);
+            }
+        },
+        set: async (value: boolean): Promise<void> => {
+            return StorageManager.shared.setBooleanItem('save_doubleAfterSplitAllowed', value);
+        },
+    },
 };
