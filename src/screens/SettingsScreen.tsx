@@ -4,12 +4,12 @@ import { NavigationStackScreenProps } from 'react-navigation-stack';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FlatGrid } from 'react-native-super-grid';
 import ChartOptionButton from 'components/ChartOptionButton';
-import IconButton from 'components/IconButton';
 import SwitchOptionView from 'components/SwitchOptionView';
+import IconButton from 'components/IconButton';
+import { AvailableKeys } from 'models/StorageManager';
 import BasicChartManager from 'models/BasicChartManager';
 import Color from 'models/Color';
 import Font from 'models/Font';
-import { AvailableKeys } from 'models/StorageManager';
 
 /**
  * The BlackjackBS settings screen.
@@ -18,7 +18,7 @@ const SettignsScreen = (props: Props): JSX.Element => {
     const [hapticFeedbackEnabled, setHapticFeedbackEnabled] = useState(false);
     const [dealerStandsSoft17, setDealerStandsSoft17] = useState(false);
     const [doubleAfterSplitAllowed, setDoubleAfterSplitAllowed] = useState(false);
-    const [activeChartID, setActiveChartID] = useState('');
+    const [activeChartID, setActiveChartID] = useState(''); // Only requires the 3-character prefix
     const SCREEN_WIDTH = Dimensions.get('window').width;
 
     // Setup saved user settings
@@ -98,7 +98,7 @@ const SettignsScreen = (props: Props): JSX.Element => {
                         contentContainerStyle={styles.flatGrid}
                         itemDimension={SCREEN_WIDTH}
                         spacing={10}
-                        data={Object.keys(BasicChartManager.ChartGuide.charts)}
+                        data={Object.keys(BasicChartManager.ChartInfo)}
                         renderItem={({ item }) => {
                             return (
                                 <ChartOptionButton

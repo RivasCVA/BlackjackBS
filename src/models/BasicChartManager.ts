@@ -1,5 +1,3 @@
-import chart from 'assets/charts/chart-guide.json';
-
 import chartMDC from 'assets/charts/chart-MDC.json';
 import chartMDCDH from 'assets/charts/chart-MDC-DH.json';
 import chartMDCNDAS from 'assets/charts/chart-MDC-NDAS.json';
@@ -17,18 +15,32 @@ import chartSDCDHNDAS from 'assets/charts/chart-SDC-DH-NDAS.json';
 
 /**
  * Manages the available Basic Strategy Charts.
+ * @static All Methods.
  */
 export default class BasicChartManager {
     /**
-     * The Basic Strategy Chart Data Guide detailing all supported Strategy Charts.
-     * @returns JSON
+     * The object holding basic information of the available Basic Strategy charts.
      */
-    public static ChartGuide = chart;
+    public static ChartInfo: { [key: string]: ChartInfoType } = {
+        MDC: {
+            title: 'Multi-Deck Basic Strategy Chart',
+            decks: '4-8',
+        },
+        DDC: {
+            title: 'Double Deck Basic Strategy Chart',
+            decks: '2',
+        },
+        SDC: {
+            title: 'Single Deck Basic Strategy Chart',
+            decks: '1',
+        },
+    };
 
     /**
      * Retrieves the Basic Strategy Chart data from the given chart ID.
      * @param chartID The ID of the chart.
      * @returns JSON
+     * @static
      */
     public static getChartFromID = (chartID: string): { [key: string]: { [key: string]: string } } => {
         switch (chartID) {
@@ -66,8 +78,17 @@ export default class BasicChartManager {
      * Retrieves the Chart Details data from the given chart ID.
      * @param chartID The ID of the chart.
      * @returns JSON
+     * @static
      */
-    public static getChartDetailsFromID = (chartID: string): { [key: string]: string } => {
-        return Object(BasicChartManager.ChartGuide.charts)[chartID.substring(0, 3)];
+    public static getChartInfoFromID = (chartID: string): ChartInfoType => {
+        return BasicChartManager.ChartInfo[chartID.substring(0, 3)];
     };
+}
+
+/**
+ * The literal type of the Chart Info object.
+ */
+export interface ChartInfoType {
+    title: string;
+    decks: string;
 }

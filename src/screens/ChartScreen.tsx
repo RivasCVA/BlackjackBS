@@ -6,7 +6,7 @@ import BasicStrategyChart from 'components/BasicStrategyChart';
 import IconButtonAnimated from 'components/IconButtonAnimated';
 import BasicAnimation from 'models/BasicAnimation';
 import { AvailableKeys } from 'models/StorageManager';
-import BasicChartManager from 'models/BasicChartManager';
+import BasicChartManager, { ChartInfoType } from 'models/BasicChartManager';
 import Color from 'models/Color';
 import Font from 'models/Font';
 
@@ -15,7 +15,7 @@ import Font from 'models/Font';
  */
 const ChartScreen = (props: Props): JSX.Element => {
     const [chartID, setChartID] = useState<string>('');
-    const [chartDetails, setChartDetails] = useState<{ [key: string]: string }>({});
+    const [chartDetails, setChartDetails] = useState<ChartInfoType>({ title: '', decks: '' });
     const [dealerStandsSoft17, setDealerStandsSoft17] = useState(false);
     const [doubleAfterSplitAllowed, setDoubleAfterSplitAllowed] = useState(false);
     const contentOpacity = new BasicAnimation.Value(0);
@@ -24,8 +24,10 @@ const ChartScreen = (props: Props): JSX.Element => {
     useEffect(() => {
         AvailableKeys.save_activeChartID.get().then((chartID) => {
             setChartID(chartID);
-            setChartDetails(BasicChartManager.getChartDetailsFromID(chartID));
+            setChartDetails(BasicChartManager.getChartInfoFromID(chartID));
             BasicAnimation.easeValue(contentOpacity, 1, 500).start();
+
+            // Find the correct chart flags
             if (chartID.includes('DHNDAS')) {
                 setDealerStandsSoft17(false);
                 setDoubleAfterSplitAllowed(false);
@@ -42,6 +44,7 @@ const ChartScreen = (props: Props): JSX.Element => {
         });
     }, [contentOpacity]);
 
+    // All of the chart content and components
     const getContent = () => {
         if (chartID.length === 0) return <View />;
         return (
@@ -82,6 +85,7 @@ const ChartScreen = (props: Props): JSX.Element => {
         );
     };
 
+    // A chart example cell detailing the meaning of each symbol and color
     const getExampleCell = (symbol: string, text: string, color: string) => {
         return (
             <View style={styles.exampleCell}>

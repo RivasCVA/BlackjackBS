@@ -17,10 +17,10 @@ import Font from 'models/Font';
  * A blackjack player action button.
  */
 const PlayerActionButton = (props: Props): JSX.Element => {
-    const { style, title, titleStyle, onPress, disabled = false, hapticFeedback: haptic = false } = props;
+    const { style, title, titleStyle, onPress, disabled = false, hapticFeedback = false } = props;
 
     const handleOnPress = (event: GestureResponderEvent) => {
-        if (haptic) BasicHaptic.generate('impactLight');
+        if (hapticFeedback) BasicHaptic.generate('impactLight');
         onPress(event);
     };
 

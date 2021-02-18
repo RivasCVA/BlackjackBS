@@ -8,14 +8,7 @@ import BasicAnimation from 'models/BasicAnimation';
  * A button with an animated icon.
  */
 const IconButtonAnimated = (props: Props): JSX.Element => {
-    const {
-        style,
-        icon,
-        onPress,
-        hapticFeedback: haptic = false,
-        animationDuration = 0,
-        animationDelay = 0,
-    } = props;
+    const { style, icon, onPress, hapticFeedback = false, animationDuration = 0, animationDelay = 0 } = props;
 
     const animationProgress = new BasicAnimation.Value(0);
 
@@ -34,7 +27,7 @@ const IconButtonAnimated = (props: Props): JSX.Element => {
     }, [animationDelay, animationDuration, animationProgress]);
 
     const handleOnPress = (event: GestureResponderEvent) => {
-        if (haptic) BasicHaptic.generate('impactLight');
+        if (hapticFeedback) BasicHaptic.generate('impactLight');
         onPress(event);
     };
 

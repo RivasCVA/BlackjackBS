@@ -17,11 +17,11 @@ import BasicHaptic from 'models/BasicHaptic';
  * A button styled for selecting a Basic Strategy Chart.
  */
 const ChartOptionButton = (props: Props): JSX.Element => {
-    const { style, chartID, onPress, isSelected = false, hapticFeedback: haptic = false } = props;
-    const chart = Object(BasicChartManager.ChartGuide.charts)[chartID];
+    const { style, chartID, onPress, isSelected = false, hapticFeedback = false } = props;
+    const chart = BasicChartManager.getChartInfoFromID(chartID);
 
     const handleOnPress = (event: GestureResponderEvent) => {
-        if (haptic) BasicHaptic.generate('impactLight');
+        if (hapticFeedback) BasicHaptic.generate('impactLight');
         onPress(event);
     };
 
