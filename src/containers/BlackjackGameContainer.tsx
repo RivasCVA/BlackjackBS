@@ -57,6 +57,11 @@ const BlackjackGameContainer = (): JSX.Element => {
         [playerCards, dealerCards, resetCards]
     );
 
+    // Pull latest chart
+    useEffect(() => {
+        BlackjackBrain.shared.refreshChart();
+    });
+
     // Show a new hand at the start
     useEffect(() => {
         resetCards();

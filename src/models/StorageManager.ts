@@ -12,13 +12,23 @@ export default class StorageManager {
     public static shared = new StorageManager();
 
     // eslint-disable-next-line no-useless-constructor, @typescript-eslint/no-empty-function
-    private constructor() {}
+    private constructor() {
+        // Ensure all storage keys are in disk, else set to default values
+        AsyncStorage.getAllKeys().then((ASKeys) => {
+            Object.keys(AvailableKeys).forEach((AKKey) => {
+                if (!ASKeys.includes(AKKey)) {
+                    const key = AKKey as keyof typeof AvailableKeys;
+                    AvailableKeys[key].setDefault();
+                    console.log(`Set default key for ${key}`);
+                }
+            });
+        });
+    }
 
     /**
      * Gets the data value with the given key.
      * @param key The key holding the value.
      * @returns string
-     * @static
      */
     public getItem = async (key: keyof typeof AvailableKeys): Promise<string> => {
         try {
@@ -34,7 +44,6 @@ export default class StorageManager {
      * Gets the data value with the given key.
      * @param key The key holding the value.
      * @returns boolean
-     * @static
      */
     public getBooleanItem = async (key: keyof typeof AvailableKeys): Promise<boolean> => {
         try {
@@ -54,7 +63,6 @@ export default class StorageManager {
      * Gets the data value with the given key.
      * @param key The key holding the value.
      * @returns number
-     * @static
      */
     public getNumberItem = async (key: keyof typeof AvailableKeys): Promise<number> => {
         try {
@@ -76,7 +84,6 @@ export default class StorageManager {
      * Stores the given value with the given key.
      * @param key The key to hold the value.
      * @param value The value to store.
-     * @static
      */
     public setItem = async (key: keyof typeof AvailableKeys, value: string): Promise<void> => {
         try {
@@ -91,7 +98,6 @@ export default class StorageManager {
      * Stores the given value with the given key.
      * @param key The key to hold the value.
      * @param value The value to store.
-     * @static
      */
     public setBooleanItem = async (key: keyof typeof AvailableKeys, value: boolean): Promise<void> => {
         try {
@@ -106,7 +112,6 @@ export default class StorageManager {
      * Stores the given value with the given key.
      * @param key The key to hold the value.
      * @param value The value to store.
-     * @static
      */
     public setNumberItem = async (key: keyof typeof AvailableKeys, value: number): Promise<void> => {
         try {
@@ -136,7 +141,7 @@ export default class StorageManager {
  */
 export const AvailableKeys = {
     save_activeChartID: {
-        key: '@save_activeChartID',
+        key: 'save_activeChartID',
         default: 'MDC',
         get: async (): Promise<string> => {
             try {
@@ -150,9 +155,12 @@ export const AvailableKeys = {
         set: async (value: string): Promise<void> => {
             return StorageManager.shared.setItem('save_activeChartID', value);
         },
+        setDefault: async (): Promise<void> => {
+            await AvailableKeys.save_activeChartID.set(AvailableKeys.save_activeChartID.default);
+        },
     },
     save_hapticFeedbackEnabled: {
-        key: '@save_hapticFeedbackEnabled',
+        key: 'save_hapticFeedbackEnabled',
         default: true,
         get: async (): Promise<boolean> => {
             try {
@@ -166,9 +174,14 @@ export const AvailableKeys = {
         set: async (value: boolean): Promise<void> => {
             return StorageManager.shared.setBooleanItem('save_hapticFeedbackEnabled', value);
         },
+        setDefault: async (): Promise<void> => {
+            await AvailableKeys.save_hapticFeedbackEnabled.set(
+                AvailableKeys.save_hapticFeedbackEnabled.default
+            );
+        },
     },
     save_dealerStandsSoft17: {
-        key: '@save_dealerStandsSoft17',
+        key: 'save_dealerStandsSoft17',
         default: true,
         get: async (): Promise<boolean> => {
             try {
@@ -182,9 +195,12 @@ export const AvailableKeys = {
         set: async (value: boolean): Promise<void> => {
             return StorageManager.shared.setBooleanItem('save_dealerStandsSoft17', value);
         },
+        setDefault: async (): Promise<void> => {
+            await AvailableKeys.save_dealerStandsSoft17.set(AvailableKeys.save_dealerStandsSoft17.default);
+        },
     },
     save_doubleAfterSplitAllowed: {
-        key: '@save_doubleAfterSplitAllowed',
+        key: 'save_doubleAfterSplitAllowed',
         default: true,
         get: async (): Promise<boolean> => {
             try {
@@ -197,6 +213,11 @@ export const AvailableKeys = {
         },
         set: async (value: boolean): Promise<void> => {
             return StorageManager.shared.setBooleanItem('save_doubleAfterSplitAllowed', value);
+        },
+        setDefault: async (): Promise<void> => {
+            await AvailableKeys.save_doubleAfterSplitAllowed.set(
+                AvailableKeys.save_doubleAfterSplitAllowed.default
+            );
         },
     },
 };

@@ -18,11 +18,17 @@ export default class BlackjackBrain {
     /** The Basic Strategy Chart data. */
     private chart: { [key: string]: { [key: string]: string } } = {};
 
-    private constructor() {
+    // eslint-disable-next-line no-useless-constructor, @typescript-eslint/no-empty-function
+    private constructor() {}
+
+    /**
+     * Refreshes the active chart by pulling the latest saved chartID from storage.
+     */
+    public refreshChart = (): void => {
         AvailableKeys.save_activeChartID.get().then((chartID) => {
             this.chart = BasicChartManager.getChartFromID(chartID);
         });
-    }
+    };
 
     /**
      * Checks whether the player's action is the best move according the Basic Strategy Guide.
