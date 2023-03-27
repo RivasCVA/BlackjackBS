@@ -10,3 +10,31 @@ A mobile app made through React Native that allows users to practice Blackjack B
 ## All Kinds of Table Rules
 [![BJBS-Table-Rules](https://user-images.githubusercontent.com/60367213/109587409-a7ad4680-7acc-11eb-85b4-0f66ace4ee3e.png)](#)
 ###### Begin training Blackjack Basic Strategy with any deck size and table rules your select casino enforces.
+
+## Run Locally
+
+1. Clone the repository:
+
+```
+git clone https://github.com/RivasCVA/BlackjackBS.git
+```
+
+2. Install all npm modules:
+
+```
+npm install
+```
+
+3 Run the simulator:
+
+iOS
+
+```
+npm run ios
+```
+
+Android
+
+```
+npm run android
+```
